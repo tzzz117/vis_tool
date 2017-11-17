@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>reference map</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="custom.css">
+    <link rel="shortcut icon" href="">
+    <style>
+
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 0.7px;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.2px;
+}
+
+text {
+  fill: #000;
+  font: 5px sans-serif;
+  pointer-events: none;
+}
+
+
+/* override */
+body {
+    padding: 50px 0;
+}
+
+/* arrow buttons */
+.btn-arrow {
+  position: relative;
+}
+.btn-arrow:after, .btn-arrow:before {
+  position: absolute;
+  line-height: 0;
+  content: '';
+}
+.btn-arrow:before {
+  z-index: 10;
+}
+.btn-arrow:after {
+  z-index: 9;
+}
+
+.btn-arrow-bottom:before,
+.btn-arrow-up:before {
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  left: 50%;
+  margin-left: -6px;
+}
+.btn-arrow-bottom:after,
+.btn-arrow-up:after {
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  left: 50%;
+  margin-left: -8px;
+}
+
+.btn-arrow-left:before,
+.btn-arrow-right:before {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  top: 50%;
+  margin-top: -6px;
+}
+.btn-arrow-left:after,
+.btn-arrow-right:after {
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  top: 50%;
+  margin-top: -8px;
+}
+
+.btn-default.btn-arrow-up:before {
+  border-bottom: 6px solid #fff;
+  top: -6px;
+}
+.btn-default.btn-arrow-up:after {
+  border-bottom: 8px solid #ccc;
+  top: -8px;
+}
+.btn-default.btn-arrow-up.focus:before, .btn-default.btn-arrow-up:focus:before {
+  border-bottom-color: #e6e6e6;
+}
+.btn-default.btn-arrow-up.focus:after, .btn-default.btn-arrow-up:focus:after {
+  border-bottom-color: #8c8c8c;
+}
+.btn-default.btn-arrow-up:hover:before {
+  border-bottom-color: #e6e6e6;
+}
+.btn-default.btn-arrow-up:hover:after {
+  border-bottom-color: #adadad;
+}
+.btn-default.btn-arrow-bottom:before {
+  border-top: 6px solid #fff;
+  bottom: -6px;
+}
+.btn-default.btn-arrow-bottom:after {
+  border-top: 8px solid #ccc;
+  bottom: -8px;
+}
+.btn-default.btn-arrow-bottom.focus:before, .btn-default.btn-arrow-bottom:focus:before {
+  border-top-color: #e6e6e6;
+}
+.btn-default.btn-arrow-bottom.focus:after, .btn-default.btn-arrow-bottom:focus:after {
+  border-top-color: #8c8c8c;
+}
+.btn-default.btn-arrow-bottom:hover:before {
+  border-top-color: #e6e6e6;
+}
+.btn-default.btn-arrow-bottom:hover:after {
+  border-top-color: #adadad;
+}
+.btn-default.btn-arrow-left:before {
+  border-right: 6px solid #fff;
+  left: -6px;
+}
+.btn-default.btn-arrow-left:after {
+  border-right: 8px solid #ccc;
+  left: -8px;
+}
+.btn-default.btn-arrow-left.focus:before, .btn-default.btn-arrow-left:focus:before {
+  border-right-color: #e6e6e6;
+}
+.btn-default.btn-arrow-left.focus:after, .btn-default.btn-arrow-left:focus:after {
+  border-right-color: #8c8c8c;
+}
+.btn-default.btn-arrow-left:hover:before {
+  border-right-color: #e6e6e6;
+}
+.btn-default.btn-arrow-left:hover:after {
+  border-right-color: #adadad;
+}
+.btn-default.btn-arrow-right:before {
+  border-left: 6px solid #fff;
+  right: -6px;
+}
+.btn-default.btn-arrow-right:after {
+  border-left: 8px solid #ccc;
+  right: -8px;
+}
+.btn-default.btn-arrow-right.focus:before, .btn-default.btn-arrow-right:focus:before {
+  border-left-color: #e6e6e6;
+}
+.btn-default.btn-arrow-right.focus:after, .btn-default.btn-arrow-right:focus:after {
+  border-left-color: #8c8c8c;
+}
+.btn-default.btn-arrow-right:hover:before {
+  border-left-color: #e6e6e6;
+}
+.btn-default.btn-arrow-right:hover:after {
+  border-left-color: #adadad;
+}
+
+.btn-primary.btn-arrow-up:before {
+  border-bottom: 6px solid #428bca;
+  top: -6px;
+}
+.btn-primary.btn-arrow-up:after {
+  border-bottom: 8px solid #357ebd;
+  top: -8px;
+}
+.btn-primary.btn-arrow-up.focus:before, .btn-primary.btn-arrow-up:focus:before {
+  border-bottom-color: #3071a9;
+}
+.btn-primary.btn-arrow-up.focus:after, .btn-primary.btn-arrow-up:focus:after {
+  border-bottom-color: #193c5a;
+}
+.btn-primary.btn-arrow-up:hover:before {
+  border-bottom-color: #3071a9;
+}
+.btn-primary.btn-arrow-up:hover:after {
+  border-bottom-color: #285e8e;
+}
+.btn-primary.btn-arrow-bottom:before {
+  border-top: 6px solid #428bca;
+  bottom: -6px;
+}
+.btn-primary.btn-arrow-bottom:after {
+  border-top: 8px solid #357ebd;
+  bottom: -8px;
+}
+.btn-primary.btn-arrow-bottom.focus:before, .btn-primary.btn-arrow-bottom:focus:before {
+  border-top-color: #3071a9;
+}
+.btn-primary.btn-arrow-bottom.focus:after, .btn-primary.btn-arrow-bottom:focus:after {
+  border-top-color: #193c5a;
+}
+.btn-primary.btn-arrow-bottom:hover:before {
+  border-top-color: #3071a9;
+}
+.btn-primary.btn-arrow-bottom:hover:after {
+  border-top-color: #285e8e;
+}
+.btn-primary.btn-arrow-left:before {
+  border-right: 6px solid #428bca;
+  left: -6px;
+}
+.btn-primary.btn-arrow-left:after {
+  border-right: 8px solid #357ebd;
+  left: -8px;
+}
+.btn-primary.btn-arrow-left.focus:before, .btn-primary.btn-arrow-left:focus:before {
+  border-right-color: #3071a9;
+}
+.btn-primary.btn-arrow-left.focus:after, .btn-primary.btn-arrow-left:focus:after {
+  border-right-color: #193c5a;
+}
+.btn-primary.btn-arrow-left:hover:before {
+  border-right-color: #3071a9;
+}
+.btn-primary.btn-arrow-left:hover:after {
+  border-right-color: #285e8e;
+}
+.btn-primary.btn-arrow-right:before {
+  border-left: 6px solid #428bca;
+  right: -6px;
+}
+.btn-primary.btn-arrow-right:after {
+  border-left: 8px solid #357ebd;
+  right: -8px;
+}
+.btn-primary.btn-arrow-right.focus:before, .btn-primary.btn-arrow-right:focus:before {
+  border-left-color: #3071a9;
+}
+.btn-primary.btn-arrow-right.focus:after, .btn-primary.btn-arrow-right:focus:after {
+  border-left-color: #193c5a;
+}
+.btn-primary.btn-arrow-right:hover:before {
+  border-left-color: #3071a9;
+}
+.btn-primary.btn-arrow-right:hover:after {
+  border-left-color: #285e8e;
+}
+
+.btn-success.btn-arrow-up:before {
+  border-bottom: 6px solid #5cb85c;
+  top: -6px;
+}
+.btn-success.btn-arrow-up:after {
+  border-bottom: 8px solid #4cae4c;
+  top: -8px;
+}
+.btn-success.btn-arrow-up.focus:before, .btn-success.btn-arrow-up:focus:before {
+  border-bottom-color: #449d44;
+}
+.btn-success.btn-arrow-up.focus:after, .btn-success.btn-arrow-up:focus:after {
+  border-bottom-color: #255625;
+}
+.btn-success.btn-arrow-up:hover:before {
+  border-bottom-color: #449d44;
+}
+.btn-success.btn-arrow-up:hover:after {
+  border-bottom-color: #398439;
+}
+.btn-success.btn-arrow-bottom:before {
+  border-top: 6px solid #5cb85c;
+  bottom: -6px;
+}
+.btn-success.btn-arrow-bottom:after {
+  border-top: 8px solid #4cae4c;
+  bottom: -8px;
+}
+.btn-success.btn-arrow-bottom.focus:before, .btn-success.btn-arrow-bottom:focus:before {
+  border-top-color: #449d44;
+}
+.btn-success.btn-arrow-bottom.focus:after, .btn-success.btn-arrow-bottom:focus:after {
+  border-top-color: #255625;
+}
+.btn-success.btn-arrow-bottom:hover:before {
+  border-top-color: #449d44;
+}
+.btn-success.btn-arrow-bottom:hover:after {
+  border-top-color: #398439;
+}
+.btn-success.btn-arrow-left:before {
+  border-right: 6px solid #5cb85c;
+  left: -6px;
+}
+.btn-success.btn-arrow-left:after {
+  border-right: 8px solid #4cae4c;
+  left: -8px;
+}
+.btn-success.btn-arrow-left.focus:before, .btn-success.btn-arrow-left:focus:before {
+  border-right-color: #449d44;
+}
+.btn-success.btn-arrow-left.focus:after, .btn-success.btn-arrow-left:focus:after {
+  border-right-color: #255625;
+}
+.btn-success.btn-arrow-left:hover:before {
+  border-right-color: #449d44;
+}
+.btn-success.btn-arrow-left:hover:after {
+  border-right-color: #398439;
+}
+.btn-success.btn-arrow-right:before {
+  border-left: 6px solid #5cb85c;
+  right: -6px;
+}
+.btn-success.btn-arrow-right:after {
+  border-left: 8px solid #4cae4c;
+  right: -8px;
+}
+.btn-success.btn-arrow-right.focus:before, .btn-success.btn-arrow-right:focus:before {
+  border-left-color: #449d44;
+}
+.btn-success.btn-arrow-right.focus:after, .btn-success.btn-arrow-right:focus:after {
+  border-left-color: #255625;
+}
+.btn-success.btn-arrow-right:hover:before {
+  border-left-color: #449d44;
+}
+.btn-success.btn-arrow-right:hover:after {
+  border-left-color: #398439;
+}
+
+.btn-info.btn-arrow-up:before {
+  border-bottom: 6px solid #5BCBEC;
+  top: -6px;
+}
+.btn-info.btn-arrow-up:after {
+  border-bottom: 8px solid #44c4e9;
+  top: -8px;
+}
+.btn-info.btn-arrow-up.focus:before, .btn-info.btn-arrow-up:focus:before {
+  border-bottom-color: #2dbde7;
+}
+.btn-info.btn-arrow-up.focus:after, .btn-info.btn-arrow-up:focus:after {
+  border-bottom-color: #127d9c;
+}
+.btn-info.btn-arrow-up:hover:before {
+  border-bottom-color: #2dbde7;
+}
+.btn-info.btn-arrow-up:hover:after {
+  border-bottom-color: #19acd7;
+}
+.btn-info.btn-arrow-bottom:before {
+  border-top: 6px solid #5BCBEC;
+  bottom: -6px;
+}
+.btn-info.btn-arrow-bottom:after {
+  border-top: 8px solid #44c4e9;
+  bottom: -8px;
+}
+.btn-info.btn-arrow-bottom.focus:before, .btn-info.btn-arrow-bottom:focus:before {
+  border-top-color: #2dbde7;
+}
+.btn-info.btn-arrow-bottom.focus:after, .btn-info.btn-arrow-bottom:focus:after {
+  border-top-color: #127d9c;
+}
+.btn-info.btn-arrow-bottom:hover:before {
+  border-top-color: #2dbde7;
+}
+.btn-info.btn-arrow-bottom:hover:after {
+  border-top-color: #19acd7;
+}
+.btn-info.btn-arrow-left:before {
+  border-right: 6px solid #5BCBEC;
+  left: -6px;
+}
+.btn-info.btn-arrow-left:after {
+  border-right: 8px solid #44c4e9;
+  left: -8px;
+}
+.btn-info.btn-arrow-left.focus:before, .btn-info.btn-arrow-left:focus:before {
+  border-right-color: #2dbde7;
+}
+.btn-info.btn-arrow-left.focus:after, .btn-info.btn-arrow-left:focus:after {
+  border-right-color: #127d9c;
+}
+.btn-info.btn-arrow-left:hover:before {
+  border-right-color: #2dbde7;
+}
+.btn-info.btn-arrow-left:hover:after {
+  border-right-color: #19acd7;
+}
+.btn-info.btn-arrow-right:before {
+  border-left: 6px solid #5BCBEC;
+  right: -6px;
+}
+.btn-info.btn-arrow-right:after {
+  border-left: 8px solid #44c4e9;
+  right: -8px;
+}
+.btn-info.btn-arrow-right.focus:before, .btn-info.btn-arrow-right:focus:before {
+  border-left-color: #2dbde7;
+}
+.btn-info.btn-arrow-right.focus:after, .btn-info.btn-arrow-right:focus:after {
+  border-left-color: #127d9c;
+}
+.btn-info.btn-arrow-right:hover:before {
+  border-left-color: #2dbde7;
+}
+.btn-info.btn-arrow-right:hover:after {
+  border-left-color: #19acd7;
+}
+
+.btn-warning.btn-arrow-up:before {
+  border-bottom: 6px solid #f0ad4e;
+  top: -6px;
+}
+.btn-warning.btn-arrow-up:after {
+  border-bottom: 8px solid #eea236;
+  top: -8px;
+}
+.btn-warning.btn-arrow-up.focus:before, .btn-warning.btn-arrow-up:focus:before {
+  border-bottom-color: #ec971f;
+}
+.btn-warning.btn-arrow-up.focus:after, .btn-warning.btn-arrow-up:focus:after {
+  border-bottom-color: #985f0d;
+}
+.btn-warning.btn-arrow-up:hover:before {
+  border-bottom-color: #ec971f;
+}
+.btn-warning.btn-arrow-up:hover:after {
+  border-bottom-color: #d58512;
+}
+.btn-warning.btn-arrow-bottom:before {
+  border-top: 6px solid #f0ad4e;
+  bottom: -6px;
+}
+.btn-warning.btn-arrow-bottom:after {
+  border-top: 8px solid #eea236;
+  bottom: -8px;
+}
+.btn-warning.btn-arrow-bottom.focus:before, .btn-warning.btn-arrow-bottom:focus:before {
+  border-top-color: #ec971f;
+}
+.btn-warning.btn-arrow-bottom.focus:after, .btn-warning.btn-arrow-bottom:focus:after {
+  border-top-color: #985f0d;
+}
+.btn-warning.btn-arrow-bottom:hover:before {
+  border-top-color: #ec971f;
+}
+.btn-warning.btn-arrow-bottom:hover:after {
+  border-top-color: #d58512;
+}
+.btn-warning.btn-arrow-left:before {
+  border-right: 6px solid #f0ad4e;
+  left: -6px;
+}
+.btn-warning.btn-arrow-left:after {
+  border-right: 8px solid #eea236;
+  left: -8px;
+}
+.btn-warning.btn-arrow-left.focus:before, .btn-warning.btn-arrow-left:focus:before {
+  border-right-color: #ec971f;
+}
+.btn-warning.btn-arrow-left.focus:after, .btn-warning.btn-arrow-left:focus:after {
+  border-right-color: #985f0d;
+}
+.btn-warning.btn-arrow-left:hover:before {
+  border-right-color: #ec971f;
+}
+.btn-warning.btn-arrow-left:hover:after {
+  border-right-color: #d58512;
+}
+.btn-warning.btn-arrow-right:before {
+  border-left: 6px solid #f0ad4e;
+  right: -6px;
+}
+.btn-warning.btn-arrow-right:after {
+  border-left: 8px solid #eea236;
+  right: -8px;
+}
+.btn-warning.btn-arrow-right.focus:before, .btn-warning.btn-arrow-right:focus:before {
+  border-left-color: #ec971f;
+}
+.btn-warning.btn-arrow-right.focus:after, .btn-warning.btn-arrow-right:focus:after {
+  border-left-color: #985f0d;
+}
+.btn-warning.btn-arrow-right:hover:before {
+  border-left-color: #ec971f;
+}
+.btn-warning.btn-arrow-right:hover:after {
+  border-left-color: #d58512;
+}
+
+.btn-danger.btn-arrow-up:before {
+  border-bottom: 6px solid #d9534f;
+  top: -6px;
+}
+.btn-danger.btn-arrow-up:after {
+  border-bottom: 8px solid #d43f3a;
+  top: -8px;
+}
+.btn-danger.btn-arrow-up.focus:before, .btn-danger.btn-arrow-up:focus:before {
+  border-bottom-color: #c9302c;
+}
+.btn-danger.btn-arrow-up.focus:after, .btn-danger.btn-arrow-up:focus:after {
+  border-bottom-color: #761c19;
+}
+.btn-danger.btn-arrow-up:hover:before {
+  border-bottom-color: #c9302c;
+}
+.btn-danger.btn-arrow-up:hover:after {
+  border-bottom-color: #ac2925;
+}
+.btn-danger.btn-arrow-bottom:before {
+  border-top: 6px solid #d9534f;
+  bottom: -6px;
+}
+.btn-danger.btn-arrow-bottom:after {
+  border-top: 8px solid #d43f3a;
+  bottom: -8px;
+}
+.btn-danger.btn-arrow-bottom.focus:before, .btn-danger.btn-arrow-bottom:focus:before {
+  border-top-color: #c9302c;
+}
+.btn-danger.btn-arrow-bottom.focus:after, .btn-danger.btn-arrow-bottom:focus:after {
+  border-top-color: #761c19;
+}
+.btn-danger.btn-arrow-bottom:hover:before {
+  border-top-color: #c9302c;
+}
+.btn-danger.btn-arrow-bottom:hover:after {
+  border-top-color: #ac2925;
+}
+.btn-danger.btn-arrow-left:before {
+  border-right: 6px solid #d9534f;
+  left: -6px;
+}
+.btn-danger.btn-arrow-left:after {
+  border-right: 8px solid #d43f3a;
+  left: -8px;
+}
+.btn-danger.btn-arrow-left.focus:before, .btn-danger.btn-arrow-left:focus:before {
+  border-right-color: #c9302c;
+}
+.btn-danger.btn-arrow-left.focus:after, .btn-danger.btn-arrow-left:focus:after {
+  border-right-color: #761c19;
+}
+.btn-danger.btn-arrow-left:hover:before {
+  border-right-color: #c9302c;
+}
+.btn-danger.btn-arrow-left:hover:after {
+  border-right-color: #ac2925;
+}
+.btn-danger.btn-arrow-right:before {
+  border-left: 6px solid #d9534f;
+  right: -6px;
+}
+.btn-danger.btn-arrow-right:after {
+  border-left: 8px solid #d43f3a;
+  right: -8px;
+}
+.btn-danger.btn-arrow-right.focus:before, .btn-danger.btn-arrow-right:focus:before {
+  border-left-color: #c9302c;
+}
+.btn-danger.btn-arrow-right.focus:after, .btn-danger.btn-arrow-right:focus:after {
+  border-left-color: #761c19;
+}
+.btn-danger.btn-arrow-right:hover:before {
+  border-left-color: #c9302c;
+}
+.btn-danger.btn-arrow-right:hover:after {
+  border-left-color: #ac2925;
+}
+
+
+</style>
+</head>
+
+<body>
+
+  <div id="wrapper" class='toggled'>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <!-- Initial Content --> 
+      <div id='main_container'>
+
+        <!-- this row is required, -fluid causes problems --> 
+        <div class="row" > 
+
+          <div class="col-lg-12">
+
+            <!-- visualization -->
+            <div id='viz_container'>
+
+              <div class='row'>
+                
+                <div id='clust_instruct_container' >
+                  
+                  <h1 id='viz_website_title'>Reference Map</h1>
+
+                  <div id='viz_gmt_labels'></div>                
+                  <div class='viz_instruct_text'> this visualization shows relationship between reference and title/attribute/keyword similarity on specific year. each circle represents a paper, each curve line represent a relationship from paper referenced to paper referencing it. </div>
+					<div class='viz_instruct_text'> you can get the distribution among papers with similarity based on title/abstract/keyword feature (feature obtained from mapping high dimension to 2d) showing the first ?% similar papers </div>
+                  
+                  
+                  <!-- input box for gene search -->
+                  <div id='gene_search_container' class='row'>                                           
+                      <div>
+                        <input id='_yr' type="text" class="form-control" placeholder="year" aria-describedby="sizing-addon2">
+					    
+					    <button type = "button" id="search_yr" class = "btn btn-primary btn-sm">
+      						search year
+  			 			</button>
+                      </div>
+                      
+                      
+                      <div>
+                        <input id='_doi' type="text" class="form-control" placeholder="id" aria-describedby="sizing-addon2">
+                        <input id='_t' type="text" class="form-control" placeholder="title" aria-describedby="sizing-addon2">
+                        <input id='_pct' type="text" class="form-control" placeholder="%" aria-describedby="sizing-addon2">
+					     
+					     <select class="selectpicker" id = "_sim" data-style="btn-primary" data-width="120px" >
+  							<option> title </option>
+  							<option> abstract </option>
+  							<option> keyword </option>
+						</select>
+						
+						
+					    <button type = "button" id="search_id" class = "btn btn-primary btn-sm">
+      						search id
+  			 			</button> 			 			
+
+  			 			<button type="button" id="_reset"  class="btn btn-info btn-sm"> 
+  							reset 
+  			 			</button>
+                      </div>                                                           
+                  </div>   
+                  
+                  
+                  <div id ="analysis" >
+                  	<div class='viz_instruct_text'> when % >15%, most of points in one graph begin to appear in another graph with same percentage. while reference itself seems to have no relationship with similarity in title/abstract/keyword. (e.g. a paper is similar to an outlier)</div>
+                  	<div class='viz_instruct_text'> conclusion - it's not necessary to reference to a paper with high similarity in title/abstract/keyword</div>
+                   </div>
+                  
+                   
+                                       
+                                
+
+                  </div>
+                
+                </div>
+
+
+
+
+
+
+                <div id ='clustergram_container' >                                      
+                    <div id = 'direction' class="row">
+						<div class="col-xs-3">
+    	   			 		<button type="button" id="up" class="btn btn-arrow btn-xs btn-arrow-up btn-primary">Up</button>
+	    				</div>
+        				<div class="col-xs-3">
+            				<button type="button" id ="down" class="btn btn-arrow btn-xs btn-arrow-bottom btn-success btn-outline">Down</button>
+	    				</div>
+        				<div class="col-xs-3">
+            				<button type="button" id="left" class="btn btn-arrow btn-xs btn-arrow-left btn-danger btn-outline">Left</button>
+	    				</div>
+        				<div class="col-xs-3">
+            				<button type="button" id="right" class="btn btn-arrow btn-xs btn-arrow-right btn-warning">Right</button>
+	    				</div>
+					</div>
+				
+         
+                  	<div id='clust_and_row_container'>                                
+                    	<div id='svg_div'></div>
+                 	 </div>                                               
+                </div>
+              
+              
+              </div>
+            </div>
+            <!-- end visualization -->
+
+          </div>
+        </div> <!-- end row -->
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script src='vis2.js'></script>
+
+</body>
+</html>
